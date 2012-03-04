@@ -20,35 +20,42 @@ ofxTextInputField::ofxTextInputField() {
 	cursorPosition=0;
 	cursorx=0;
 	cursory=0;
+    bDisplay = false;
+    
 }
 
 void ofxTextInputField::enable() {
 	ofAddListener(ofEvents.keyPressed, this, &ofxTextInputField::keyPressed);
+    bDisplay = true;
 }
 
 void ofxTextInputField::disable() {
 	ofRemoveListener(ofEvents.keyPressed, this, &ofxTextInputField::keyPressed);
+    bDisplay = false;
 }
 
 void ofxTextInputField::draw(int x, int y) {
-	ofPushMatrix();
-	ofTranslate(x, y);
-	
-	//draw text
-	ofDrawBitmapString(text, 10,10);
-	
-	//draw cursor line
-	ofPushStyle();
-	float timeFrac = 0.5 * sin(3.0f * ofGetElapsedTimef()) + 0.5;
-	
-	ofColor col = ofGetStyle().color;
-	
-	ofSetColor(col.r * timeFrac, col.g * timeFrac, col.b * timeFrac);
-	ofSetLineWidth(3.0f);
-	ofLine(cursorx*8 + 10, 13.7*cursory, cursorx*8 + 10, 10+13.7*cursory);
-	ofPopStyle();
-	
-	ofPopMatrix();
+    if (bDisplay)
+    {
+        ofPushMatrix();
+        ofTranslate(x, y);
+        
+        //draw text
+        ofDrawBitmapString(text, 10,10);
+        
+        //draw cursor line
+        ofPushStyle();
+        float timeFrac = 0.5 * sin(3.0f * ofGetElapsedTimef()) + 0.5;
+        
+        ofColor col = ofGetStyle().color;
+        
+        ofSetColor(col.r * timeFrac, col.g * timeFrac, col.b * timeFrac);
+        ofSetLineWidth(3.0f);
+        ofLine(cursorx*8 + 10, 13.7*cursory, cursorx*8 + 10, 10+13.7*cursory);
+        ofPopStyle();
+        
+        ofPopMatrix();
+    }
 }
 
 void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {	

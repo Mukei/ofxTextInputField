@@ -30,6 +30,8 @@ class ofxTextInputField {
 	int cursorPosition;
 	
 	ofEvent<string> evtEnter;
+    
+    bool bDisplay;
 	
 protected:
 	void	keyPressed(ofKeyEventArgs &a);
